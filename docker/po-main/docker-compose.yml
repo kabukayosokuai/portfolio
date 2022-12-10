@@ -1,0 +1,208 @@
+version: '3'
+
+services:
+  #nginxというサービス名
+  nginx:
+
+    #nginxコンテナ作成に必要なDockerfileを指定
+    build:
+
+      #ルートディレクトリの指定。ここではdocker-composeのあるnginxフォルダをルートディレクトリとして指定。
+      # 余計なデータやファイルをこのフォルダに格納しない
+      context: ./nginx
+
+      #Dockerfile内に記載されているステージを指定。
+      target: ${STAGE}
+
+    #コンテナ名を指定している。コンテナ名を指定しないとDockerの一覧を表示して特定のコンテナのみ消そうとしても数字の羅列が名前になりわかりずらい。だから名前をつける
+    container_name: po-nginx-container
+    
+    #このコンテナのホスト名を指定する
+    hostname: po-nginx-server
+
+    #OS起動時に自動的にコンテナを立ち上げる。(スイッチONにする)
+    restart: always
+    
+    #ホストマシンには公開されず、リンクされたサービス(https)のみに公開。
+    expose:
+      - "8000"
+
+    # ports:
+    #   - '8003:8000'
+    
+    #volumeは指定されたホスト内のフォルダをコンテナ内の指定されたフォルダを同期する。
+    #片方が変更されたらもう片方も同期して変更される。
+    #ここではnginxの設定ファイルをホストに同期することで永続化(消えないようにしている)
+    volumes:
+      - ../../nginx/conf:/etc/nginx/conf.d:ro
+      - ../../nginx/uwsgi_params:/etc/nginx/uwsgi_params:ro
+      - ../../nginx/static:/static
+    
+    #djangoサービスを立ち上げた後にこのコンテナを起動する。
+    #nginxのapp_nginx.confにはdjangoコンテナの8001番ポートにアクセスする設定が記述されているため、先にdjangoコンテナを起動しておかないとエラーが発生する
+    depends_on:
+      - django
+    
+    #https,nginx,djangoコンテナが属するネットワークpo-main-networkを作成することでこれらのコンテナの通信を可能にする
+    networks:
+      - po-main-network
+
+  #httpsというサービス名
+  https:
+    #このイメージを使用すると自動的にhttps化をしてくれる
+    build:
+
+      #ルートディレクトリの指定。ここではdocker-composeのあるnginxフォルダをルートディレクトリとして指定。
+      # 余計なデータやファイルをこのフォルダに格納しない
+      context: ./https
+
+      #Dockerfile内に記載されているステージを指定。
+      target: ${STAGE}
+    
+    #このコンテナのホスト名を指定する
+    container_name: po-https-container
+
+    #このコンテナには開発用と本番用で設定を変える必要がある為、envファイルだけを変えれば開発/本番環境で作り分けができる
+    env_file:
+      - .env
+    
+    #株価予測AIとの80:443ポートの競合を避けるため入口は常に解放するのではなく、開発したいタイミングで手動で起動する
+    #その為、alwaysはコメントアウトする
+    # restart: always
+
+    #ホストPCの80/443番ポートにアクセスがあったらコンテナ内の80/443ポートに接続する
+    ports:
+      - '80:80'
+      - '443:443'
+    
+    environment:
+      #envファイルのDOMAIN_NAMEへアクセスがあったらnginxサービスの8000番にアクセスする
+      DOMAINS: '${DOMAIN_NAME} -> http://nginx:8000'
+      
+      #ここで開発用か本番のどちらかをここで指定する
+      STAGE: ${STAGE}
+
+      #リクエストデータの大きさを指定する。ファイルなどのアップロードをする際はこの制限を大きくする必要がある。
+      #ただし、このアプリではファイルをアップデートするつもりはないため、アクセス過多によるサーバーダウン阻止のため指定
+      CLIENT_MAX_BODY_SIZE: 1M
+
+      #強制敵にHTTPS化[s]
+      HSTS_MAX_AGE: 60
+
+    #nginxの次にこのコンテナを起動する
+    depends_on:
+      - nginx
+    
+    #https,nginx,djangoコンテナが属するネットワークpo-main-networkを作成することでこれらのコンテナの通信を可能にする
+    networks:
+      - po-main-network
+
+    #HTTPS化の為の証明書等を永続化する為にvolume化
+    volumes:
+      - ../../https/ssl_certs:/var/lib/https-portal
+      
+  #djangoというサービス名
+  django:
+
+    #djangoコンテナ作成に必要なDockerfileを指定
+    build:
+
+      #ルートディレクトリの指定。ここではdocker-composeのあるdjangoフォルダをルートディレクトリとして指定。
+      # イメージを作成する際、この階層以下のフォルダを全てコピーして作成する為無駄なデータやファイルは格納しない
+      context: ./django
+
+      #Dockerfile内に記載されているステージを指定。
+      target: ${STAGE}
+
+    #イメージ名の指定。これをしないと無名のイメージが量産されてしまう。
+    image: po-django-image:latest
+    
+    #コンテナ名の指定
+    container_name: po-django-container
+    
+    #このコンテナのホスト名を指定する
+    hostname: po-django-server
+
+    #OS起動時に自動的にコンテナを立ち上げる。(スイッチONにする)
+    restart: always
+
+    #WSGIというWebサーバー(nginxなど)とpythonのwebアプリ(djangoなど)をつなぐインターフェース
+    #uWSGIは上記WSGIの機能を持ったアプリケーションサーバー。uWSGIだけでもdjangoをデプロイできる
+    # webサーバー：nginxやappachなどがあり、静的ファイルを高速で配信したり、プロキシとして負荷分散の役割。djangoとwebサーバーが直接やり取りできない
+    # アプリケーションサーバー:uWSGIなどがあり、リクエスト/レスポンスの受け渡しや起動するプロセス数やスレッド数の管理が可能
+    #--socket：8001でuwsgiの8001番ポートを解放。(exposeでもポートをセットしているがexposeはコンテナ間の通信を可能にする為にセットしているもの)
+    #--module portfolio.wsgi：djangoのportfolioのプロジェクト作成時に自動的に生成されるwsgiを指定。プロジェクト名+wsgi
+    #--py-autoreload：1番はファイルに変更があった場合は自動リロードする設定
+    #--logto：ログファイルの出力先
+    command: uwsgi --socket :8001 --module portfolio.wsgi --py-autoreload 1 --logto /tmp/mylog.log
+    
+    #djangoフォルダを永続化
+    volumes:
+      - ../../django:/django
+    expose:
+      - "8001"
+    
+    #runserver時にアクセスできるようにホスト-コンテナのポートをつなぐ。
+    #コンテナに入ってpython manage.py runserver 0:8000でサーバーを起動し、http://localhost:8002/にアクセスする。
+    # ports:
+    #   - '8002:8000'
+    networks:
+      - po-main-network
+    environment:
+      TZ: Asia/Tokyo
+
+    #nginxの次にこのコンテナを起動する
+    depends_on:
+      - db
+  
+  #dbというサービス名
+  db:
+
+    #mysqlイメージを指定。このコンテナにmysqlをインストール
+    image: mysql
+
+    #上記方法mysqlをコンテナにインストールした場合、文字コードをtf8mb4に変更する必要がある。下記はその文字コードを変更するコマンドを
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+    
+    #コンテナ名を指定している。コンテナ名を指定しないとDockerの一覧を表示して特定のコンテナのみ消そうとしても数字の羅列が名前になりわかりずらい。だから名前をつける
+    container_name: po-db-container
+    
+    #このコンテナのホスト名を指定する
+    hostname: po-db-host
+
+    #環境ファイルを設定。コンテナ立ち上げにdocker-compose.ymlと同階層にいる.envファイルのデータを読み込む。
+    #mysqlを使用する際はroodパスワードなどを指定するため、そのパスワードdocker-compose.ymlにべた書きすると
+    #gitでpushした際にセキュリティ的に危険(開発時のpassとはいえ)
+    #その為にも.envに記載して.envはgitignoreに追加してばれないようにする
+    env_file: 
+      - .env
+    
+    #OS起動時に自動的にコンテナを立ち上げる。(スイッチONにする)
+    restart: always
+
+    #ポートの指定。左側の数字はホストのポートの数字。右側の数字はコンテナのポートの数字
+    #これはホストの3306ポートにアクセスしたらコンテナの3306にアクセスされる。
+    ports:
+      - "3306:3306"
+    # expose:
+    #   - "3306"
+
+    #volumeは指定されたホスト内のフォルダをコンテナ内の指定されたフォルダを同期する。
+    #片方が変更されたらもう片方も同期して変更される。
+    #for_dataではmysqlのデータをコンテナがoffになっても残り続けるようにホスト側と同期することでデータが消えないようにしている
+    #mysql8.0以上では認証方式がcaching_sha2_passwordというものに変更され認証するためのプラグインが無いためエラーが発生する。
+    # そのエラーを防ぐ為に認証方式を元々の方法に変更するファイルをmysql-confdに格納し、volumeでマウントすることで認証方式を変更する
+    # https://chico-shikaku.com/2020/07/django-docker-mysql-1156-plugin-caching-sha2/
+    volumes:
+        - ../../db/for_data:/var/lib/mysql
+        - ../../db/mysql-confd:/etc/mysql/conf.d
+    
+    #ネットワークの指定。これを設定しないとdjangoコンテナとは連携出来ない。
+    networks:
+      - po-main-network
+
+networks:
+
+  #https,nginx,django,dbを繋ぐネットワーク
+  po-main-network:
+     driver: bridge

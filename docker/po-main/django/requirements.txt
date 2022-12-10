@@ -1,0 +1,16 @@
+Django
+mysqlclient
+django-environ
+uwsgi
+PyMySQL
+numpy
+pandas
+openpyxl
+requests
+beautifulsoup4
+scipy
+lxml
+django-static-md5url
+jaconv
+line_profiler
+black
