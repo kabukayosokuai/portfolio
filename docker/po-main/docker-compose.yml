@@ -36,7 +36,7 @@ services:
     volumes:
       - ../../nginx/conf:/etc/nginx/conf.d:ro
       - ../../nginx/uwsgi_params:/etc/nginx/uwsgi_params:ro
-      - ../../nginx/static:/static
+      - ../../django/static:/static
     
     #djangoサービスを立ち上げた後にこのコンテナを起動する。
     #nginxのapp_nginx.confにはdjangoコンテナの8001番ポートにアクセスする設定が記述されているため、先にdjangoコンテナを起動しておかないとエラーが発生する
@@ -144,8 +144,8 @@ services:
     
     #runserver時にアクセスできるようにホスト-コンテナのポートをつなぐ。
     #コンテナに入ってpython manage.py runserver 0:8000でサーバーを起動し、http://localhost:8002/にアクセスする。
-    # ports:
-    #   - '8002:8000'
+    ports:
+      - '8002:8000'
     networks:
       - po-main-network
     environment:
