@@ -1,0 +1,9 @@
+.ryotan {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ryotan span{
+  font-family: 'Prata', serif;
+  /* font-size: 1.5rem; */
+}

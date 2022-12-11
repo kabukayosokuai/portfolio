@@ -1,11 +1,57 @@
+{% load static %}
+
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>小澤理央のポートフォリオ |　XU3の皆様へ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- CSS読み込み -->
+        <link rel="stylesheet" href="{% static 'myapp/css/myapp.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <!-- googleフォント読み込み -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');</style>
+        
+        <title>小澤理央のポートフォリオ | XU3の皆様へ</title>
         <meta name="description" content= "XU3で働きたくてWEBサイトを作ってしまいました。私自身の紹介やXU3でやりたいことを伝える為に作成しました。">
     </head>
 
     <body>
-        <p>test</p>
+        <!-- タイトル -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- 小画面用 -->
+                <div class="col-12 d-md-none p-3 h2 ryotan">
+                    <span>M</span><span>Y</span>&emsp;
+                    <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
+                </div>
+
+                <!-- 大画面用 -->
+                <div class="col-8 d-none d-md-flex p-3 display-4 ryotan">
+                    <span>M</span><span>Y</span>&emsp;
+                    <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自己紹介 -->
+
+        <header>ヘッダーですdd</header> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 border border-dark">2</div>
+                <div class="col-md-2 border border-dark">2</div>
+                <div class="col-md-2 border border-dark">2</div>
+                <div class="col-md-6 border border-dark">6</div>
+            </div>
+        </div>
+        <footer>フッターです</footer> 
+
+        <!-- jQuery読み込み -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <!-- Propper.js読み込み -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <!-- BootstrapのJavascript読み込み -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     </body>
 </html>
