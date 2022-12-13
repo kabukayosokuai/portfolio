@@ -5,12 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- CSS読み込み -->
-        <link rel="stylesheet" href="{% static 'myapp/css/myapp.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'myapp/css/myapp.css' %}">
         <!-- googleフォント読み込み -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
-        <style>@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');</style>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&family=Prata&display=swap" rel="stylesheet">
+        <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&family=Prata&display=swap');</style>
         
         <title>小澤理央のポートフォリオ | XU3の皆様へ</title>
         <meta name="description" content= "XU3で働きたくてWEBサイトを作ってしまいました。私自身の紹介やXU3でやりたいことを伝える為に作成しました。">
@@ -21,31 +21,214 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- 小画面用 -->
-                <div class="col-12 d-md-none p-3 h2 ryotan">
+                <div class="col-12 d-md-none pt-3 pb-2 h2 ryotan">
                     <span>M</span><span>Y</span>&emsp;
                     <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
                 </div>
 
                 <!-- 大画面用 -->
-                <div class="col-8 d-none d-md-flex p-3 display-4 ryotan">
+                <div class="col-12 d-none d-md-flex pt-3 pb-2 display-4 ryotan">
                     <span>M</span><span>Y</span>&emsp;
                     <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
                 </div>
             </div>
         </div>
 
-        <!-- 自己紹介 -->
-
-        <header>ヘッダーですdd</header> 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2 border border-dark">2</div>
-                <div class="col-md-2 border border-dark">2</div>
-                <div class="col-md-2 border border-dark">2</div>
-                <div class="col-md-6 border border-dark">6</div>
+        <!-- トップ -->
+        <div class="border p-0 m-0 bg_img">
+            <div class="box d-inline align-top m-0 p-0 h-0" >
+                <div class="exp pl-1 pl-md-3 pl-lg-4 pl-xl-5">
+                    <p>WEBサイト作っちゃいました</p>
+                </div>
+            </div>
+            <div class="box d-inline align-top m-0 p-0 h-0" >
+                <div class="exp">
+                    <p>XU3で働きたくて</p>
+                </div>
             </div>
         </div>
-        <footer>フッターです</footer> 
+
+        <!-- コンテンツ -->
+        <div class="container-fluid my-3 py-3">
+
+            <!-- 自己紹介 -->
+            <div class ="container-fluid my-5 py-5">
+
+                <!-- 見出し -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <p class ="midashi h1">自己紹介</p>
+                        <p>Self introduction</p>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="row mt-3 px-md-5">
+                    <div class="col-5 col-lg-4 px-lg-5">
+                        <img class="img-fluid" src="{% static 'myapp/img/self.jpg' %}" alt ="自己紹介">
+                    </div>
+                    <div class="col-7  col-lg-8">
+                        <table class="table self-intro h-100">
+                            <tbody>
+                                <tr>
+                                    <td><div class="text-center">名前</div></td>
+
+                                    <td>小澤　理央</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">性別</div></td>
+
+                                    <td>男</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">生年月日</div></td>
+
+                                    <td>1994/3/29</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">入社年</div></td>
+
+                                    <td>2018/4/1</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">所属</div></td>
+
+                                    <td>XJS</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">趣味</div></td>
+
+                                    <td>カメラ</td>
+                                </tr>
+                                <tr>
+                                    <td><div class="text-center">座右の銘</div></td>
+
+                                    <td>猪突猛進</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 自身について -->
+            <div class ="container-fluid my-5 py-5">
+                <!-- 見出し -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <p class ="midashi2 h1">自身について</p>
+                        <p>About me</p>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="row mt-3 justify-content-center main-content">
+                    <div class="col-10 col-lg-5 col-xl-4 mr-lg-4 mr-xl-0 text-justify text-content">
+                        <p class="nakami">閲覧いただきありがとうございます。小澤理央と申します。
+                            趣味はカメラとプログラミングで最近はキャンプも新たな趣味の仲間入りを果たしました。
+                            昔から「面白そう!」「やってみたい!」と思ったことは何でも挑戦する性格で、
+                            時間を忘れて熱中することがよくあります。
+                            プログラミングに関してはその傾向が顕著で、気づいたら朝だったということが
+                            しばしばあります。良くも悪くも「猪突猛進」という言葉が自分をよく表していると思っています。
+                            目標に向かって突き進んでいく姿勢はそのままに、視野を広く持って柔軟に対応できるよう、
+                            自身の人間力も磨いて行きたいと思います。
+                        </p>
+                    </div>
+                    <div class="d-none d-xl-block col-xl-1">
+                    </div>
+                    <div class="col-10 col-lg-5 col-xl-3 ml-lg-4 ml-xl-0 for_img">
+                            <img class="img-c img-fluid" src="{% static 'myapp/img/aboutme.jpg' %}" alt ="自己について">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 志望動機 -->
+            <div class ="container-fluid my-5 py-5">
+                <!-- 見出し -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <p class ="midashi h1">志望動機</p>
+                        <p>Motivation</p>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="row mt-3 justify-content-center main-content">
+                    <div class="col-10 col-lg-5 col-xl-3 mr-lg-4 mr-xl-0 for_img text-right">
+                        <img class="img-c img-fluid" src="{% static 'myapp/img/ZE1.png' %}" alt ="リーフ">
+                    </div>
+                    <div class="d-none d-xl-block col-xl-1">
+                    </div>
+                    <div class="col-10 col-lg-5 col-xl-4 ml-lg-4 ml-xl-0 text-justify text-content">
+                        <p class="nakami">私がXU3で働きたいと思った理由はスマホアプリがお客様に与える付加価値の大きさに魅力を感じたからです。
+                            私はリーフを所有しており、通勤や買い物に使っているお気に入りの車です。
+                            気に入っているポイントは色々ありますが、特に気に入っているのはスマホアプリからエアコンのオンオフができる点です。
+                            暑い日や寒い日でもスマホからエアコンを起動できるので、車に乗った瞬間から快適で日頃からお世話になっています。
+                            今後、スマホで出来ることやサービスが増えていき、より一層アプリの影響力が増してくると考えています。
+                            そして、その中核を担うXU3にとても魅力を感じております。
+                            実際に自分が使って感じた「この機能いいな!」を自分が開発する立場となってお客様に新しい価値を提供していきたいと思っております。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 意気込み -->
+            <div class ="container-fluid my-5 py-5">
+                <!-- 見出し -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <p class ="midashi h1">意気込み</p>
+                        <p>Enthusiasm</p>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="row mt-3 justify-content-center main-content">
+                    <div class="col-10 col-lg-5 col-xl-4 mr-lg-4 mr-xl-0 text-justify text-content">
+                        <p class="nakami">自身の想いを言葉や文章にするのが苦手でWEBサイト開発を通して表現してみました。
+                            まだまだ知らないことや分からないことがたくさんありますが、XU3に所属するからには必死に勉強して1日でも早く頼られる人材になりたいと思います。
+                            将来的にはバックエンド、フロントエンド、Andoroid・iOSアプリを横断的に経験して、各領域を語れるエンジニアになると共に
+                            世界中のお客様から喜んで貰えるアプリを開発していきたいです。
+                            ご検討の程、よろしくお願いします。
+                        </p>
+                    </div>
+                    <div class="d-none d-xl-block col-xl-1">
+                    </div>
+                    <div class="col-10 col-lg-5 col-xl-3 ml-lg-4 ml-xl-0 for_img">
+                            <img class="img-c img-fluid" src="{% static 'myapp/img/ikigomi.jpg' %}" alt ="意気込み">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 作品 -->
+            <div class ="container-fluid my-5 py-5">
+                <!-- 見出し -->
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <p class ="midashi h1">制作物</p>
+                        <p>Work</p>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="row mt-3 justify-content-center main-content">
+                    <div class="col-10 col-lg-5 col-xl-4 mr-lg-4 mr-xl-0 text-justify text-content">
+                        <p class="nakami">
+                            株価予測AI<br>
+                            <a href="https://www.kabukayosokuai.com/">https://www.kabukayosokuai.com/</a><br>
+                            <br>
+                            父の影響で株式投資を行っており、銘柄分析に多くの時間が掛かっていたことから
+                            自動化し、分析時間を短縮することを目的に開発しました。
+                            20年分の株価データから、周期性を分析したり他のサイトには無いような独自スクリーニング機能を折り込みました。
+                            投資分析アプリであるため、上場銘柄約4000社の株価に対して膨大な量の計算を素早く完了させる必要があり
+                            ました。そのため、プロファイラを用いた計算コストの分析から極力クエリを発行しないようなコーディング等、分析
+                            と改善を繰り返して開発を行いました。
+                        </p>
+                    </div>
+                    <div class="d-none d-xl-block col-xl-1">
+                    </div>
+                    <div class="col-10 col-lg-5 col-xl-3 ml-lg-4 ml-xl-0 for_img">
+                        <a href="https://www.kabukayosokuai.com/"><img class="img-c img-fluid" src="{% static 'myapp/img/kabukayosokuai.png' %}" alt ="意気込み"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
         <!-- jQuery読み込み -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -53,5 +236,35 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <!-- BootstrapのJavascript読み込み -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+        <script>
+        $(function() {
+            //画面幅に応じて画像サイズ変更
+            function decide_img(){
+                var window_w = window.innerWidth;//画面幅
+                for(var i=0; i<$('.nakami').length; i++){
+                    var img_size;
+                    var img_h = $('.nakami').eq(i).height(); //pタグの高さ取得
+                    var img_w = $('.for_img').eq(i).width(); //img用の幅取得
+                    
+                    if(window_w >= 992){//bootstrap4 ブレークポイント lg
+                        if(img_h > img_w){
+                            img_size = img_w;
+                        }else{
+                            img_size = img_h;
+                        }
+                    }else{
+                        img_size = img_w;
+                    }
+                    $('.img-c').eq(i).height(img_size);
+                    $('.img-c').eq(i).width(img_size);
+                }
+            }
+            decide_img();
+            $(window).resize(function(){// 画面幅が変更されたときに実行させたい処理内容
+                decide_img();
+            });
+        });
+        </script>
     </body>
 </html>
